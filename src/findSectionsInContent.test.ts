@@ -1,35 +1,50 @@
 import { findSectionsInContent } from './findSectionsInContent'
 
-const F1 = `
+describe('findSectionsInContent', async () => {
+	test.each([
+		[
+			`
 // @reexport
-`
-
-const F2 = `
+`,
+			[{ input: '', output: undefined }],
+		],
+		[
+			`
 // @reexport
 // @end-reexport
-`
-
-const F3 = `
+`,
+			[{ input: '', output: undefined }],
+		],
+		[
+			`
 // @reexport ./*.tsx
-`
-
-const F4 = `
+`,
+			[{ input: './*.tsx', output: undefined }],
+		],
+		[
+			`
 // @reexport ./*.tsx,./**/*.story.tsx
-`
-
-const F5 = `
+`,
+			[{ input: './*.tsx,./**/*.story.tsx', output: undefined }],
+		],
+		[
+			`
 // @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$2'
-`
-
-const F6 = `
+`,
+			[{ input: './*.tsx,./**/*.story.tsx', output: '\texport * from \'./$2\'' }],
+		],
+		[
+			`
 // @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$2'
 a
 b
 c
 // @end-reexport
-`
-
-const F7 = `
+`,
+			[{ input: './*.tsx,./**/*.story.tsx', output: '\texport * from \'./$2\'' }],
+		],
+		[
+			`
 // @reexport a:b
 // @end-reexport
 
@@ -41,32 +56,14 @@ a
 b
 c
 // @end-reexport
-`
-
-describe('findSectionsInContent', async () => {
-	it('should work', async () => {
-		expect(await findSectionsInContent(F1)).toEqual([
-			{ input: '', output: undefined },
-		])
-		expect(await findSectionsInContent(F2)).toEqual([
-			{ input: '', output: undefined },
-		])
-		expect(await findSectionsInContent(F3)).toEqual([
-			{ input: './*.tsx', output: undefined },
-		])
-		expect(await findSectionsInContent(F4)).toEqual([
-			{ input: './*.tsx,./**/*.story.tsx', output: undefined },
-		])
-		expect(await findSectionsInContent(F5)).toEqual([
-			{ input: './*.tsx,./**/*.story.tsx', output: '\texport * from \'./$2\'' },
-		])
-		expect(await findSectionsInContent(F6)).toEqual([
-			{ input: './*.tsx,./**/*.story.tsx', output: '\texport * from \'./$2\'' },
-		])
-		expect(await findSectionsInContent(F7)).toEqual([
-			{ input: 'a', output: 'b' },
-			{ input: 'c', output: 'd' },
-			{ input: 'e', output: 'f' },
-		])
+`,
+			[
+				{ input: 'a', output: 'b' },
+				{ input: 'c', output: 'd' },
+				{ input: 'e', output: 'f' },
+			],
+		],
+	])('case %#\n%s', async (input, expected) => {
+		expect(await findSectionsInContent(input)).toEqual(expected)
 	})
 })
