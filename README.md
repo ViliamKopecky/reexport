@@ -1,6 +1,6 @@
 # reexport
 
-**Experimental** utility to automate reexporting TypeScript `index.ts` files.
+**Experimental** utility to automate reexporting TypeScript in `index.ts` files.
 
 Insert comment instructions `// @reexport glob/pattern/*.tsx` in place where you want to reexport such files and this utility will reexport all matching files.
 
@@ -20,13 +20,13 @@ With directory like this:
 ./Bob.ts
 ```
 
-running this:
+Running this:
 
 ```bash
 npx reexport ./index.ts
 ```
 
-will generate this:
+Will generate this:
 
 ```typescript
 // @reexport ./*.{ts,tsx}
