@@ -4,6 +4,9 @@
 
 Insert comment instructions `// @reexport glob/pattern/*.tsx` in place where you want to reexport such files and this utility will reexport all matching files.
 
+https://user-images.githubusercontent.com/316435/204151619-0606e4d0-df19-4000-b475-dcdc72e3b101.mov
+
+
 ## Usage
 
 Your `index.ts` looking like this:
