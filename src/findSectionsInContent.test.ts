@@ -29,19 +29,19 @@ describe('findSectionsInContent', async () => {
 		],
 		[
 			`
-// @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$2'
+// @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$TS_PATH'
 `,
-			[{ input: './*.tsx,./**/*.story.tsx', output: '\texport * from \'./$2\'' }],
+			[{ input: './*.tsx,./**/*.story.tsx', output: '\texport * from \'./$TS_PATH\'' }],
 		],
 		[
 			`
-// @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$2'
+// @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$TS_PATH'
 a
 b
 c
 // @end-reexport
 `,
-			[{ input: './*.tsx,./**/*.story.tsx', output: '\texport * from \'./$2\'' }],
+			[{ input: './*.tsx,./**/*.story.tsx', output: '\texport * from \'./$TS_PATH\'' }],
 		],
 		[
 			`

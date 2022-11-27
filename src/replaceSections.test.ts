@@ -40,10 +40,10 @@ export * from './g/h.story'
 `
 
 const F5 = `
-// @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$2'
+// @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$TS_PATH'
 `
 const F5Output = `
-// @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$2'
+// @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$TS_PATH'
 \texport * from './a'
 \texport * from './b'
 \texport * from './d/e/f.story'
@@ -52,14 +52,14 @@ const F5Output = `
 `
 
 const F6 = `
-// @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$2'
+// @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$TS_PATH'
 a
 b
 c
 // @end-reexport
 `
 const F6Output = `
-// @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$2'
+// @reexport ./*.tsx,./**/*.story.tsx:\texport * from './$TS_PATH'
 	export * from './a'
 	export * from './b'
 	export * from './d/e/f.story'

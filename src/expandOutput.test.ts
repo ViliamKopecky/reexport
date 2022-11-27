@@ -1,36 +1,28 @@
 import { expandOutput } from './expandOutput'
 
 describe('expandOutput', async () => {
-	it('dollar', async () => {
+	it('variables', async () => {
 		expect(
 			expandOutput({
 				filepath: 'a/b/c/d.module.tsx',
-				template: '$1 $2 $3 $4 $5',
+				template: '$BASENAME $TS_PATH $PATH $NAME $SAFE_NAME $EXT',
 			})
-		).toEqual('d.module.tsx a/b/c/d.module d.module d .tsx')
+		).toEqual('d.module.tsx a/b/c/d.module a/b/c/d.module.tsx d.module d .tsx')
 	})
-	it('named', async () => {
+	it('index file', async () => {
 		expect(
 			expandOutput({
-				filepath: 'a/b/c/d.module.tsx',
-				template: '$BASENAME $PATH $NAME $SAFE_NAME $EXT',
+				filepath: 'a/b/c/index.tsx',
+				template: '$BASENAME $TS_PATH $PATH $NAME $SAFE_NAME $EXT',
 			})
-		).toEqual('d.module.tsx a/b/c/d.module d.module d .tsx')
+		).toEqual('index.tsx a/b/c a/b/c/index.tsx index index .tsx')
 	})
-	it('escaped dollar', async () => {
+	it('escaped variables', async () => {
 		expect(
 			expandOutput({
 				filepath: 'a/b/c/d.module.tsx',
-				template: '\\$1 \\$2 \\$3 \\$4 \\$5',
+				template: '\\$BASENAME \\$TS_PATH \\$PATH \\$NAME \\$SAFE_NAME \\$EXT',
 			})
-		).toEqual('$1 $2 $3 $4 $5')
-	})
-	it('escaped named', async () => {
-		expect(
-			expandOutput({
-				filepath: 'a/b/c/d.module.tsx',
-				template: '\\$BASENAME \\$PATH \\$NAME \\$SAFE_NAME \\$EXT',
-			})
-		).toEqual('$BASENAME $PATH $NAME $SAFE_NAME $EXT')
+		).toEqual('$BASENAME $TS_PATH $PATH $NAME $SAFE_NAME $EXT')
 	})
 })

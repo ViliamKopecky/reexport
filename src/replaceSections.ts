@@ -13,7 +13,7 @@ export function replaceSections(props: {
 
 	const currentFileBasename = path.basename(filepath)
 
-	const defaultOutput = props.defaultOutput ?? 'export * from \'./$2\''
+	const defaultOutput = props.defaultOutput ?? 'export * from \'./$TS_PATH\''
 
 	const regex = getReexportRegex()
 
