@@ -46,7 +46,7 @@ export async function reexport(options: {
 		const watchers = createWatchersRepository()
 		const watcher = chokidar.watch(files, { cwd, ignored: ignore })
 
-		watcher.on('all', async (event, filepath) => {
+		const handler = async (event: 'add' | 'change' | 'unlink', filepath: string) => {
 			logger.verbose(`watcher event: ${event} ${filepath}`)
 			const content = await fs.readFile(path.join(cwd, filepath), 'utf-8')
 
@@ -79,7 +79,11 @@ export async function reexport(options: {
 			})
 
 			debouncedProcessFile(filepath)
-		})
+		}
+
+		watcher.on('add', async (filepath) => handler('add', filepath))
+		watcher.on('change', async (filepath) => handler('change', filepath))
+		watcher.on('unlink', async (filepath) => handler('unlink', filepath))
 
 		return async () => {
 			await watcher.close()
@@ -93,7 +97,7 @@ export async function reexport(options: {
 		}
 	} else {
 		const foundFiles = await import('globby').then((module) =>
-			module.globby(files, { cwd, ignore })
+			module.globby(files, { cwd, ignore, onlyFiles: true })
 		)
 		if (foundFiles.length) {
 			logger.verbose(`found ${foundFiles.length} matching files: ${foundFiles.join(', ')}`)
@@ -107,7 +111,6 @@ export async function reexport(options: {
 		} else {
 			logger.log('found no matching files')
 		}
-		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		return () => {}
+		return () => undefined
 	}
 }
